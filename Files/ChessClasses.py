@@ -1,6 +1,4 @@
 import attr
-# import pygame
-from pygame.locals import *
 
 
 @attr.s
@@ -14,7 +12,6 @@ class Square:
     id = attr.ib(type=int)
     piece = attr.ib(type=str)
     square_colour = attr.ib(type=str, default="White")
-
 
     def colour_setter(self):
         """
@@ -37,7 +34,7 @@ class Board:
     # Board holds all the positional data turn to turn, the groundwork that the game is built on
     board = attr.ib(attr.Factory(list))
 
-    def setup(self, start: str=""):
+    def setup(self, start: str = ""):
 
         """
         Generates 64 squares for the board, starting top left (White Square) and moving to the bottom right id's 0-63
@@ -50,8 +47,6 @@ class Board:
             self.FEN_translator_in("RNBQKBNR/PPPPPPPP/8/8/8/8/pppppppp/rnbqkbnr")
         else:
             self.FEN_translator_in(start)
-
-
 
     def FEN_translator_in(self, FEN_string: str):
         id_pointer = 0
@@ -82,9 +77,8 @@ class Board:
                 print("this has been called")
 
                 self.board[id_pointer].piece = pieces_dict[FEN_string[character]]
-                id_pointer +=1
-                    # do something FDGSLJNBDSAKHJGBKHJRFBDFKJHGNBsdl;ikfjmcvlkj
-
+                id_pointer += 1
+                # do something FDGSLJNBDSAKHJGBKHJRFBDFKJHGNBsdl;ikfjmcvlkj
 
     # DEPRECATED!!! Literally just for Debugging atm I HATE HOW THIS IS AND IT NEEDS A COMPLETE REDESIGN TO SCALE IT
     def board_printer(self):
@@ -101,19 +95,31 @@ class Board:
                 else:
                     print_string += f"|{'Square':^20}"
 
-
                 id_pointer += 1
 
             print_string += "|"
             print(print_string)
             print(f"|{' ' * ((21 * 8) - 1)}|")
-            print("-"*21*8)
+            print("-" * 21 * 8)
+
 
 @attr.s
 class GameLogic:
     board = attr.ib(attr.Factory(list))
+
     def move_list(self):
         pass
+
+    def _pawn(self, colour):
+        if colour == "white":
+            return (+8, +16, +7, + 9)
+        else:
+            return (-8, -16, -7, -9)
+
+    def _castle(self, colour):
+        pass
+
+
 
 a = Board()
 
